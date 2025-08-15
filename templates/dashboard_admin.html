@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wallet Watch - Admin</title>
+</head>
+<body>
+  <h2>Welcome, Admin ({{ session.get('email', 'admin') }})</h2>
+  <a href="/logout">Logout</a>
+
+  <h3>All Users' Expenses</h3>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>User ID</th>
+    </tr>
+    {% for item in data %}
+    <tr>
+      <td>{{ item.date }}</td>
+      <td>₹{{ item.amount }}</td>
+      <td>{{ item.category }}</td>
+      <td>{{ item.user_id }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

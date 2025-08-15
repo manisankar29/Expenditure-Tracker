@@ -1,0 +1,17 @@
+<!-- templates/extract_token.html -->
+<!DOCTYPE html>
+<html>
+<head><title>Extracting Token</title></head>
+<body>
+  <p>🔄 Redirecting to password reset...</p>
+  <script>
+    const hash = window.location.hash;
+    if (hash.includes("access_token")) {
+      const query = hash.substring(1); // remove `#`
+      window.location.href = `/reset-password?${query}`;
+    } else {
+      document.body.innerHTML = "❌ Missing access token.";
+    }
+  </script>
+</body>
+</html>

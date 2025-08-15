@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wallet Watch - User Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: white;
+    }
+
+    /* Animated background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+      background-size: 150px 150px;
+      animation: floatPattern 25s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(180deg); }
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(45deg, #4CAF50, #2196F3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .brand-info h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand-info p {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      font-weight: 300;
+    }
+
+    .logout-btn {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-section h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+      background: whitesmoke;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: whitesmoke;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Add Expense Button */
+    .add-expense-section {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .add-expense-btn {
+      background: linear-gradient(45deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+      text-decoration: none;
+      display: inline-block;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3); }
+      to { box-shadow: 0 12px 35px rgba(76, 175, 80, 0.5); }
+    }
+
+    .add-expense-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(76, 175, 80, 0.4);
+    }
+
+    /* Visualization Section */
+    .visualization-section {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .visualization-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .visualization-header h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .graph-selector {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      padding: 12px 20px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .graph-selector:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .graph-selector option {
+      background: #764ba2;
+      color: white;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      height: 500px;
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Expenses History */
+    .history-section {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .history-header h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .sort-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sort-container label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .sort-select {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      padding: 8px 15px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .sort-select option {
+      background: #764ba2;
+      color: white;
+    }
+
+    .expenses-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .expenses-table th,
+    .expenses-table td {
+      padding: 15px 20px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .expenses-table th {
+      background: rgba(255, 255, 255, 0.15);
+      font-weight: 600;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .expenses-table td {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .expenses-table tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: scale(1.01);
+      transition: all 0.3s ease;
+    }
+
+    .amount-cell {
+      font-weight: 600;
+      color: #4CAF50;
+    }
+
+    .category-cell {
+      color: #2196F3;
+      font-weight: 500;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .pagination a {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .pagination a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Support Section */
+    .support-section {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .support-section h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #4CAF50;
+    }
+
+    .support-section p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 16px;
+    }
+
+    .support-section strong {
+      color: #2196F3;
+    }
+
+    /* Copyright */
+    .copyright {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+      }
+
+      .logo-section {
+        order: 1;
+      }
+
+      .logout-btn {
+        order: 2;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .welcome-section h2 {
+        font-size: 24px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .visualization-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+      }
+
+      .history-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+      }
+
+      .chart-container {
+        height: 400px;
+      }
+
+      .expenses-table {
+        font-size: 12px;
+      }
+
+      .expenses-table th,
+      .expenses-table td {
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+
+      .brand-info h1 {
+        font-size: 20px;
+      }
+
+      .add-expense-btn {
+        padding: 15px 30px;
+        font-size: 16px;
+      }
+
+      .chart-container {
+        height: 350px;
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #4CAF50;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-section">
+      <div class="logo">W</div>
+      <div class="brand-info">
+        <h1>Wallet Watch</h1>
+        <p>Track Your Spendings. Master Your Savings!</p>
+      </div>
+    </div>
+    <a href="/logout" class="logout-btn">Logout</a>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <h2>Welcome, {{ username }}!</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">₹{{ yearly_total }}</div>
+          <div class="stat-label">This Year Spent</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">₹{{ total_spent }}</div>
+          <div class="stat-label">Total Spent (All-Time)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Expense Button -->
+    <section class="add-expense-section">
+      <a href="/add" class="add-expense-btn">+ Add New Expense</a>
+    </section>
+
+    <!-- Visualization Section -->
+    <section class="visualization-section">
+      <div class="visualization-header">
+        <h2>📊 Data Visualizations</h2>
+        <select id="graphSelector" class="graph-selector" onchange="showGraph()">
+          <option value="daily">Daily Spend</option>
+          <option value="weekly">Weekly Spend</option>
+          <option value="monthly">Monthly Spend</option>
+          <option value="yearly">Yearly Trend</option>
+          <option value="category">Category Spend</option>
+        </select>
+      </div>
+      <div id="chartContainer" class="chart-container"></div>
+    </section>
+
+    <!-- Expenses History -->
+    <section class="history-section">
+      <div class="history-header">
+        <h3>📋 Expenses History</h3>
+        <div class="sort-container">
+          <label for="sort">Sort by:</label>
+          <select id="sort" class="sort-select" onchange="sortExpenses()">
+            <option value="desc" {% if sort == 'desc' %}selected{% endif %}>Latest First</option>
+            <option value="asc" {% if sort == 'asc' %}selected{% endif %}>Earliest First</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="expenses-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+            <tr>
+              <td>{{ item.date }}</td>
+              <td class="amount-cell">₹{{ item.amount }}</td>
+              <td class="category-cell">{{ item.category }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Pagination Controls -->
+      <div class="pagination">
+        {% if page > 1 %}
+          <a href="?page={{ page - 1 }}&sort={{ sort }}">← Previous</a>
+        {% endif %}
+        {% if total > page * 15 %}
+          <a href="?page={{ page + 1 }}&sort={{ sort }}">Next →</a>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support-section">
+      <h2>🚀 Help & Support</h2>
+      <p>For any queries or support, reach out to us at: <strong>walletwatchhelp@gmail.com</strong></p>
+    </section>
+
+    <!-- Copyright -->
+    <div class="copyright">
+      <p>&copy; 2025 Mani Sankar Pasala. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Plotly Data and Script -->
+  <script type="application/json" id="expense-data">
+    {{ data | tojson }}
+  </script>
+
+  <script>
+    const expenses = JSON.parse(document.getElementById("expense-data").textContent);
+
+    function getChartData(type) {
+      const map = {};
+      expenses.forEach(e => {
+        let key;
+        if (type === 'daily') key = e.date;
+        else if (type === 'weekly') key = e.week;
+        else if (type === 'monthly') key = e.month;
+        else if (type === 'yearly') key = e.date.slice(0, 4);
+        else if (type === 'category') key = e.category;
+
+        map[key] = (map[key] || 0) + parseFloat(e.amount);
+      });
+
+      return {
+        labels: Object.keys(map),
+        values: Object.values(map)
+      };
+    }
+
+    function showGraph() {
+      const type = document.getElementById("graphSelector").value;
+      const { labels, values } = getChartData(type);
+
+      const data = [];
+      let layout = {
+        title: {
+          text: `${type.charAt(0).toUpperCase() + type.slice(1)} Spending Analysis`,
+          font: { color: 'white', size: 18 }
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: 'white' },
+        height: 460,
+        margin: { l: 60, r: 60, t: 60, b: 60 }
+      };
+
+      if (type === 'category') {
+        data.push({
+          labels,
+          values,
+          type: 'pie',
+          hole: 0.4,
+          textfont: { color: 'white' },
+          marker: {
+            colors: ['#4CAF50', '#2196F3', '#FF9800', '#F44336', '#9C27B0', '#00BCD4', '#8BC34A', '#FFC107']
+          }
+        });
+        layout.showlegend = true;
+        layout.legend = { font: { color: 'white' } };
+      } else {
+        data.push({
+          x: labels,
+          y: values,
+          type: 'bar',
+          marker: { 
+            color: values.map((_, i) => `hsl(${(i * 360) / values.length}, 70%, 60%)`),
+            line: { color: 'rgba(255,255,255,0.2)', width: 1 }
+          }
+        });
+        layout.xaxis = { 
+          color: 'white',
+          gridcolor: 'rgba(255,255,255,0.1)'
+        };
+        layout.yaxis = { 
+          color: 'white',
+          gridcolor: 'rgba(255,255,255,0.1)'
+        };
+      }
+
+      Plotly.newPlot('chartContainer', data, layout, {
+        responsive: true,
+        displayModeBar: false
+      });
+    }
+
+    function sortExpenses() {
+      const sortValue = document.getElementById("sort").value;
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort', sortValue);
+      window.location.href = url.toString();
+    }
+
+    // Initialize chart on page load
+    window.onload = function() {
+      showGraph();
+      
+      // Add smooth scrolling for internal links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    };
+
+    // Add loading state for links
+    document.querySelectorAll('a:not([href^="#"])').forEach(link => {
+      link.addEventListener('click', function() {
+        if (!this.classList.contains('no-loading')) {
+          this.innerHTML += ' <span class="loading"></span>';
+          this.style.pointerEvents = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
