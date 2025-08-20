@@ -12,7 +12,7 @@
     }
 
     body {
-      font-family: 'Times New Roman', Times, serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Times New Roman', Times, serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       position: relative;
@@ -23,13 +23,15 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Detect iOS and apply different styles */
+    /* Force background attachment for iOS */
     .ios-device body {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
 
-    /* Animated background pattern */
+    /* Animated background pattern - Enhanced for iOS */
     body::before {
       content: '';
       position: fixed;
@@ -51,24 +53,25 @@
       50% { transform: translateY(-30px) rotate(180deg); }
     }
 
-    /* Header - iOS specific styling */
+    /* Header - Enhanced iOS styling */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px 30px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
-    /* iOS specific header styling */
+    /* iOS specific header - More opaque and vibrant */
     .ios-device .header {
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .logo-section {
@@ -105,12 +108,25 @@
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
+    /* iOS specific brand styling */
+    .ios-device .brand-info h1 {
+      color: #1a1a1a;
+      text-shadow: none;
+      font-weight: 800;
+    }
+
     .brand-info p {
       font-size: 12px;
       color: white;
       margin: 0;
       font-weight: 400;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .ios-device .brand-info p {
+      color: #666;
+      text-shadow: none;
+      font-weight: 500;
     }
 
     .back-btn {
@@ -140,9 +156,9 @@
       padding: 30px;
     }
 
-    /* Page Title - Default styling */
+    /* Page Title - Enhanced for iOS */
     .page-title {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 30px;
@@ -152,12 +168,13 @@
       animation: slideUp 0.8s ease-out;
     }
 
-    /* iOS specific page title styling */
+    /* iOS specific page title - Much more opaque */
     .ios-device .page-title {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     }
 
     @keyframes slideUp {
@@ -174,14 +191,14 @@
     }
 
     .ios-device .page-title h2 {
-      color: #333;
+      color: #1a1a1a;
       text-shadow: none;
       font-weight: 800;
     }
 
-    /* Form Section - Default styling */
+    /* Form Section - Enhanced for iOS */
     .form-section {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 40px;
@@ -189,12 +206,13 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
-    /* iOS specific form section styling */
+    /* iOS specific form section - Much more opaque */
     .ios-device .form-section {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     }
 
     .form-section h3 {
@@ -209,8 +227,9 @@
     }
 
     .ios-device .form-section h3 {
-      color: #333;
+      color: #1a1a1a;
       text-shadow: none;
+      font-weight: 800;
     }
 
     .form-group {
@@ -227,31 +246,33 @@
     }
 
     .ios-device .form-group label {
-      color: #333;
+      color: #1a1a1a;
       text-shadow: none;
+      font-weight: 700;
     }
 
-    /* Form inputs - Default styling */
+    /* Form inputs - Enhanced iOS styling */
     .form-group select,
     .form-group input {
       width: 100%;
       padding: 15px 20px;
       border: 2px solid rgba(255, 255, 255, 0.4);
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       color: white;
       font-size: 16px;
       font-weight: 600;
       transition: all 0.3s ease;
     }
 
-    /* iOS specific form input styling */
+    /* iOS specific form inputs - Solid background */
     .ios-device .form-group select,
     .ios-device .form-group input {
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
+      background: rgba(255, 255, 255, 1);
+      color: #1a1a1a;
       font-weight: 600;
-      border: 2px solid rgba(51, 51, 51, 0.3);
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .form-group select option {
@@ -262,7 +283,7 @@
 
     .ios-device .form-group select option {
       background: white;
-      color: #333;
+      color: #1a1a1a;
       font-weight: 600;
     }
 
@@ -272,7 +293,7 @@
     }
 
     .ios-device .form-group input::placeholder {
-      color: rgba(51, 51, 51, 0.7);
+      color: rgba(26, 26, 26, 0.6);
       font-weight: 500;
     }
 
@@ -287,9 +308,10 @@
 
     .ios-device .form-group select:focus,
     .ios-device .form-group input:focus {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 1);
       border-color: #2196F3;
-      color: #333;
+      color: #1a1a1a;
+      box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
     }
 
     .submit-btn {
@@ -317,9 +339,9 @@
       transform: translateY(0);
     }
 
-    /* History Section - Default styling */
+    /* History Section - Enhanced for iOS */
     .history-section {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 30px;
@@ -327,12 +349,13 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
-    /* iOS specific history section styling */
+    /* iOS specific history section */
     .ios-device .history-section {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     }
 
     .history-header {
@@ -351,8 +374,9 @@
     }
 
     .ios-device .history-header h3 {
-      color: #333;
+      color: #1a1a1a;
       text-shadow: none;
+      font-weight: 800;
     }
 
     .sort-container {
@@ -369,13 +393,14 @@
     }
 
     .ios-device .sort-container label {
-      color: #333;
+      color: #1a1a1a;
       text-shadow: none;
+      font-weight: 700;
     }
 
-    /* Sort select - Default styling */
+    /* Sort select - Enhanced for iOS */
     .sort-select {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border: 2px solid rgba(255, 255, 255, 0.4);
       border-radius: 8px;
       padding: 8px 15px;
@@ -385,12 +410,12 @@
       font-weight: 500;
     }
 
-    /* iOS specific sort select styling */
+    /* iOS specific sort select */
     .ios-device .sort-select {
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
+      background: rgba(255, 255, 255, 1);
+      color: #1a1a1a;
       font-weight: 600;
-      border: 2px solid rgba(51, 51, 51, 0.3);
+      border: 2px solid rgba(0, 0, 0, 0.1);
     }
 
     .sort-select option {
@@ -400,24 +425,24 @@
 
     .ios-device .sort-select option {
       background: white;
-      color: #333;
+      color: #1a1a1a;
     }
 
-    /* Table - Default styling */
+    /* Table - Enhanced for iOS */
     .expenses-table {
       width: 100%;
       border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
-    /* iOS specific table styling */
+    /* iOS specific table */
     .ios-device .expenses-table {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
 
     .expenses-table th,
@@ -428,7 +453,7 @@
     }
 
     .expenses-table th {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.3);
       font-weight: 700;
       font-size: 14px;
       color: white;
@@ -438,9 +463,11 @@
     }
 
     .ios-device .expenses-table th {
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
+      background: rgba(255, 255, 255, 1);
+      color: #1a1a1a;
       text-shadow: none;
+      font-weight: 800;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .expenses-table td {
@@ -451,8 +478,10 @@
     }
 
     .ios-device .expenses-table td {
-      color: #333;
+      color: #1a1a1a;
       text-shadow: none;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .expenses-table tr:hover {
@@ -470,6 +499,7 @@
     .ios-device .amount-cell {
       color: #2E7D32;
       text-shadow: none;
+      font-weight: 800;
     }
 
     .category-cell {
@@ -481,6 +511,7 @@
     .ios-device .category-cell {
       color: #1565C0;
       text-shadow: none;
+      font-weight: 700;
     }
 
     .delete-btn {
@@ -501,7 +532,7 @@
       box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
     }
 
-    /* Pagination - Default styling */
+    /* Pagination - Enhanced for iOS */
     .pagination {
       display: flex;
       justify-content: center;
@@ -510,7 +541,7 @@
     }
 
     .pagination a {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border: 2px solid rgba(255, 255, 255, 0.4);
       color: white;
       padding: 12px 20px;
@@ -523,10 +554,11 @@
 
     /* iOS specific pagination styling */
     .ios-device .pagination a {
-      background: rgba(255, 255, 255, 0.85);
-      color: #333;
+      background: rgba(255, 255, 255, 1);
+      color: #1a1a1a;
       text-shadow: none;
-      border: 2px solid rgba(51, 51, 51, 0.3);
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      font-weight: 700;
     }
 
     .pagination a:hover {
@@ -539,9 +571,9 @@
       background: rgba(255, 255, 255, 0.8);
     }
 
-    /* Support Section - Default styling */
+    /* Support Section - Enhanced for iOS */
     .support-section {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 30px;
@@ -550,12 +582,13 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
-    /* iOS specific support section styling */
+    /* iOS specific support section */
     .ios-device .support-section {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     }
 
     .support-section h2 {
@@ -569,6 +602,7 @@
     .ios-device .support-section h2 {
       color: #2E7D32;
       text-shadow: none;
+      font-weight: 800;
     }
 
     .support-section p {
@@ -579,8 +613,9 @@
     }
 
     .ios-device .support-section p {
-      color: #333;
+      color: #1a1a1a;
       text-shadow: none;
+      font-weight: 600;
     }
 
     .support-section strong {
@@ -591,9 +626,10 @@
     .ios-device .support-section strong {
       color: #1565C0;
       text-shadow: none;
+      font-weight: 800;
     }
 
-    /* Copyright - Default styling */
+    /* Copyright - Enhanced for iOS */
     .copyright {
       text-align: center;
       padding: 20px;
@@ -604,7 +640,9 @@
     }
 
     .ios-device .copyright {
-      color: rgba(51, 51, 51, 0.8);
+      color: rgba(26, 26, 26, 0.8);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      font-weight: 600;
     }
 
     /* Responsive Design */
@@ -677,6 +715,9 @@
       body {
         height: 100vh;
         height: -webkit-fill-available;
+        /* Force hardware acceleration */
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
       }
       
       .form-group input,
@@ -690,6 +731,16 @@
         -webkit-appearance: none;
         appearance: none;
         border-radius: 12px;
+      }
+
+      /* Force backdrop-filter support */
+      .ios-device .header,
+      .ios-device .page-title,
+      .ios-device .form-section,
+      .ios-device .history-section,
+      .ios-device .support-section {
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(180%) blur(20px);
       }
     }
 
@@ -819,76 +870,4 @@
 
     <!-- Copyright -->
     <div class="copyright">
-      <p>&copy; 2025 Mani Sankar Pasala. All rights reserved.</p>
-    </div>
-  </div>
-
-  <script>
-    // iOS Detection and Class Application
-    function detectiOS() {
-      return [
-        'iPad Simulator',
-        'iPhone Simulator',
-        'iPod Simulator',
-        'iPad',
-        'iPhone',
-        'iPod'
-      ].includes(navigator.platform)
-      || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-      || /iPad|iPhone|iPod/.test(navigator.userAgent)
-      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    }
-
-    // Apply iOS-specific class if iOS is detected
-    if (detectiOS()) {
-      document.documentElement.classList.add('ios-device');
-      console.log('iOS device detected - applying iOS-specific styles');
-    }
-
-    function sortExpenses() {
-      const sortValue = document.getElementById("sort").value;
-      const url = new URL(window.location.href);
-      url.searchParams.set('sort', sortValue);
-      window.location.href = url.toString();
-    }
-
-    // Form submission with loading state
-    document.getElementById('expenseForm').addEventListener('submit', function() {
-      const button = document.getElementById('submitBtn');
-      button.innerHTML = 'Adding Expense... <span class="loading"></span>';
-      button.disabled = true;
-    });
-
-    // Add floating animation to form inputs
-    const inputs = document.querySelectorAll('input, select');
-    inputs.forEach(input => {
-      input.addEventListener('focus', function() {
-        this.parentElement.style.transform = 'scale(1.02)';
-      });
-      
-      input.addEventListener('blur', function() {
-        this.parentElement.style.transform = 'scale(1)';
-      });
-    });
-
-    // Add loading state for navigation links
-    document.querySelectorAll('a:not([href^="#"])').forEach(link => {
-      link.addEventListener('click', function() {
-        if (!this.classList.contains('no-loading')) {
-          this.innerHTML += ' <span class="loading"></span>';
-          this.style.pointerEvents = 'none';
-        }
-      });
-    });
-
-    // Add confirmation for delete buttons
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        if (!confirm('Are you sure you want to delete this expense?')) {
-          e.preventDefault();
-        }
-      });
-    });
-  </script>
-</body>
-</html>
+      <p>&
