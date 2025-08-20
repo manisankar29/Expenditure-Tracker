@@ -19,12 +19,17 @@
       overflow-x: hidden;
       color: white;
       height: -webkit-fill-available;
-      /* iOS specific fixes */
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Animated background pattern - simplified for iOS */
+    /* Detect iOS and apply different styles */
+    .ios-device body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+    }
+
+    /* Animated background pattern */
     body::before {
       content: '';
       position: fixed;
@@ -46,19 +51,24 @@
       50% { transform: translateY(-30px) rotate(180deg); }
     }
 
-    /* Header - Enhanced for iOS */
+    /* Header - iOS specific styling */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px 30px;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px); /* iOS specific */
+      background: rgba(255, 255, 255, 0.2);
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       position: sticky;
       top: 0;
       z-index: 100;
+    }
+
+    /* iOS specific header styling */
+    .ios-device .header {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .logo-section {
@@ -89,17 +99,18 @@
 
     .brand-info h1 {
       font-size: 24px;
-      font-weight: 600;
+      font-weight: 700;
       margin: 0;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      color: white; /* Explicit color for iOS */
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
     .brand-info p {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.9);
+      color: white;
       margin: 0;
-      font-weight: 300;
+      font-weight: 400;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
 
     .back-btn {
@@ -129,11 +140,9 @@
       padding: 30px;
     }
 
-    /* Page Title - Enhanced opacity for iOS */
+    /* Page Title - Default styling */
     .page-title {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px); /* iOS specific */
+      background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 30px;
@@ -141,6 +150,13 @@
       text-align: center;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       animation: slideUp 0.8s ease-out;
+    }
+
+    /* iOS specific page title styling */
+    .ios-device .page-title {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     @keyframes slideUp {
@@ -152,15 +168,13 @@
       font-size: 32px;
       margin: 0;
       color: white;
-      font-weight: bold;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     }
 
-    /* Form Section - Enhanced for iOS visibility */
+    /* Form Section - Default styling */
     .form-section {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px); /* iOS specific */
+      background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 40px;
@@ -168,12 +182,19 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
+    /* iOS specific form section styling */
+    .ios-device .form-section {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
     .form-section h3 {
       font-size: 24px;
       margin-bottom: 30px;
       color: white;
-      font-weight: bold;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -186,12 +207,13 @@
     .form-group label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 600;
+      font-weight: 700;
       color: white;
       font-size: 16px;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     }
 
+    /* Form inputs - Default styling */
     .form-group select,
     .form-group input {
       width: 100%;
@@ -201,10 +223,17 @@
       background: rgba(255, 255, 255, 0.2);
       color: white;
       font-size: 16px;
+      font-weight: 600;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px); /* iOS specific */
-      font-weight: 500;
+    }
+
+    /* iOS specific form input styling */
+    .ios-device .form-group select,
+    .ios-device .form-group input {
+      background: rgba(255, 255, 255, 0.6);
+      color: #333;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.8);
     }
 
     .form-group select option {
@@ -213,9 +242,20 @@
       font-weight: normal;
     }
 
+    .ios-device .form-group select option {
+      background: white;
+      color: #333;
+      font-weight: 600;
+    }
+
     .form-group input::placeholder {
       color: rgba(255, 255, 255, 0.8);
       font-weight: normal;
+    }
+
+    .ios-device .form-group input::placeholder {
+      color: rgba(51, 51, 51, 0.7);
+      font-weight: 500;
     }
 
     .form-group select:focus,
@@ -225,6 +265,13 @@
       background: rgba(255, 255, 255, 0.3);
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .ios-device .form-group select:focus,
+    .ios-device .form-group input:focus {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: #2196F3;
+      color: #333;
     }
 
     .submit-btn {
@@ -252,16 +299,21 @@
       transform: translateY(0);
     }
 
-    /* History Section - Enhanced for iOS */
+    /* History Section - Default styling */
     .history-section {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px); /* iOS specific */
+      background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 30px;
       margin-bottom: 30px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* iOS specific history section styling */
+    .ios-device .history-section {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .history-header {
@@ -273,10 +325,10 @@
 
     .history-header h3 {
       font-size: 22px;
-      font-weight: 600;
+      font-weight: 700;
       margin: 0;
       color: white;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .sort-container {
@@ -288,13 +340,13 @@
     .sort-container label {
       font-size: 14px;
       color: white;
-      font-weight: 500;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     }
 
+    /* Sort select - Default styling */
     .sort-select {
       background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px); /* iOS specific */
       border: 2px solid rgba(255, 255, 255, 0.4);
       border-radius: 8px;
       padding: 8px 15px;
@@ -304,20 +356,38 @@
       font-weight: 500;
     }
 
+    /* iOS specific sort select styling */
+    .ios-device .sort-select {
+      background: rgba(255, 255, 255, 0.6);
+      color: #333;
+      font-weight: 600;
+    }
+
     .sort-select option {
       background: #764ba2;
       color: white;
     }
 
+    .ios-device .sort-select option {
+      background: white;
+      color: #333;
+    }
+
+    /* Table - Default styling */
     .expenses-table {
       width: 100%;
       border-collapse: collapse;
       background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px); /* iOS specific */
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* iOS specific table styling */
+    .ios-device .expenses-table {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .expenses-table th,
@@ -329,18 +399,29 @@
 
     .expenses-table th {
       background: rgba(255, 255, 255, 0.25);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       color: white;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    .ios-device .expenses-table th {
+      background: rgba(255, 255, 255, 0.7);
+      color: #333;
     }
 
     .expenses-table td {
       font-size: 14px;
       color: white;
-      font-weight: 500;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .ios-device .expenses-table td {
+      color: #333;
+      text-shadow: none;
     }
 
     .expenses-table tr:hover {
@@ -350,15 +431,25 @@
     }
 
     .amount-cell {
-      font-weight: 600;
+      font-weight: 700;
       color: #4CAF50;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    .ios-device .amount-cell {
+      color: #2E7D32;
+      text-shadow: none;
     }
 
     .category-cell {
       color: #2196F3;
-      font-weight: 500;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    .ios-device .category-cell {
+      color: #1565C0;
+      text-shadow: none;
     }
 
     .delete-btn {
@@ -379,7 +470,7 @@
       box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
     }
 
-    /* Pagination - Enhanced for iOS */
+    /* Pagination - Default styling */
     .pagination {
       display: flex;
       justify-content: center;
@@ -389,15 +480,21 @@
 
     .pagination a {
       background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px); /* iOS specific */
       border: 2px solid rgba(255, 255, 255, 0.4);
       color: white;
       padding: 12px 20px;
       border-radius: 10px;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       transition: all 0.3s ease;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* iOS specific pagination styling */
+    .ios-device .pagination a {
+      background: rgba(255, 255, 255, 0.6);
+      color: #333;
+      text-shadow: none;
     }
 
     .pagination a:hover {
@@ -406,11 +503,13 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
 
-    /* Support Section - Enhanced for iOS */
+    .ios-device .pagination a:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Support Section - Default styling */
     .support-section {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px); /* iOS specific */
+      background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
       padding: 30px;
@@ -419,26 +518,49 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
+    /* iOS specific support section styling */
+    .ios-device .support-section {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
     .support-section h2 {
       font-size: 22px;
       margin-bottom: 15px;
       color: #4CAF50;
-      font-weight: bold;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: 700;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    .ios-device .support-section h2 {
+      color: #2E7D32;
+      text-shadow: none;
     }
 
     .support-section p {
       color: white;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .ios-device .support-section p {
+      color: #333;
+      text-shadow: none;
     }
 
     .support-section strong {
       color: #2196F3;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     }
 
-    /* Copyright - Enhanced for iOS */
+    .ios-device .support-section strong {
+      color: #1565C0;
+      text-shadow: none;
+    }
+
+    /* Copyright - Default styling */
     .copyright {
       text-align: center;
       padding: 20px;
@@ -448,7 +570,11 @@
       font-weight: 500;
     }
 
-    /* iOS Specific Responsive Design */
+    .ios-device .copyright {
+      color: rgba(51, 51, 51, 0.8);
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
       .header {
         flex-direction: column;
@@ -665,6 +791,27 @@
   </div>
 
   <script>
+    // iOS Detection and Class Application
+    function detectiOS() {
+      return [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+      ].includes(navigator.platform)
+      || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+      || /iPad|iPhone|iPod/.test(navigator.userAgent)
+      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
+    // Apply iOS-specific class if iOS is detected
+    if (detectiOS()) {
+      document.documentElement.classList.add('ios-device');
+      console.log('iOS device detected - applying iOS-specific styles');
+    }
+
     function sortExpenses() {
       const sortValue = document.getElementById("sort").value;
       const url = new URL(window.location.href);
