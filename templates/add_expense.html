@@ -814,8 +814,8 @@
         <div class="sort-container">
           <label for="sort">Sort by:</label>
           <select id="sort" class="sort-select" onchange="sortExpenses()">
-            <option value="desc">Latest First</option>
-            <option value="asc">Earliest First</option>
+            <option value="desc" {% if sort == 'desc' %}selected{% endif %}>Latest First</option>
+            <option value="asc" {% if sort == 'asc' %}selected{% endif %}>Earliest First</option>
           </select>
         </div>
       </div>
@@ -823,42 +823,37 @@
       <table class="expenses-table">
         <thead>
           <tr>
-            <th>CATEGORY</th>
-            <th>AMOUNT</th>
-            <th>DATE</th>
-            <th>ACTION</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="category-cell">HOME</td>
-            <td class="amount-cell">₹500.00</td>
-            <td>2025-08-20</td>
-            <td>
-              <form method="POST" action="/delete" style="display:inline;">
-                <input type="hidden" name="expense_id" value="1">
-                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this expense?')">Delete</button>
-              </form>
-            </td>
-          </tr>
-          <tr>
-            <td class="category-cell">FOOD</td>
-            <td class="amount-cell">₹250.00</td>
-            <td>2025-08-19</td>
-            <td>
-              <form method="POST" action="/delete" style="display:inline;">
-                <input type="hidden" name="expense_id" value="2">
-                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this expense?')">Delete</button>
-              </form>
-            </td>
-          </tr>
+          {% for item in expenses %}
+            <tr>
+              <td>{{ item.date }}</td>
+              <td class="amount-cell">₹{{ item.amount }}</td>
+              <td class="category-cell">{{ item.category }}</td>
+              <td>
+                <form method="POST" action="/delete" style="display:inline;">
+                  <input type="hidden" name="expense_id" value="{{ item.id }}">
+                  <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this expense?')">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
 
-      <!-- Pagination -->
+      <!-- Pagination Controls -->
       <div class="pagination">
-        <a href="?page=1&sort=desc">← Previous</a>
-        <a href="?page=2&sort=desc">Next →</a>
+        {% if page > 1 %}
+          <a href="?page={{ page - 1 }}&sort={{ sort }}">← Previous</a>
+        {% endif %}
+        {% if total > page * 15 %}
+          <a href="?page={{ page + 1 }}&sort={{ sort }}">Next →</a>
+        {% endif %}
       </div>
     </section>
 
@@ -870,4 +865,17 @@
 
     <!-- Copyright -->
     <div class="copyright">
-      <p>&
+      <p>&copy; 2025 Mani Sankar Pasala.</p>
+    </div>
+  </div>
+
+  <script>
+    function sortExpenses() {
+      const sortValue = document.getElementById("sort").value;
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort', sortValue);
+      window.location.href = url.toString();
+    }
+  </script>
+</body>
+</html>
